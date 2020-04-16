@@ -17,8 +17,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var label1: UILabel!
     
-    
-    var operator1: String = "+"
+    var selected_operator: Int = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,21 +26,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func changevalue(_ sender: UISegmentedControl) {
-        var segment1: String {
-            switch sender.selectedSegmentIndex{
-            case 0:
-                return "+"
-            case 1:
-                return "-"
-            case 2:
-                return "*"
-            case 3:
-                return "/"
-            default:
-                return "該当無し"
-            }
-        }
-        operator1 = segment1
+
+        selected_operator = sender.selectedSegmentIndex
     }
     
     
@@ -51,19 +37,18 @@ class ViewController: UIViewController {
         let num2 = (textfield2.text! as NSString).integerValue
         
         var result = 0
-        print(result)
         
-        switch operator1 {
-        case "+":
+        switch selected_operator {
+        case 0:
             result = num1 + num2
             break
-        case "-":
+        case 1:
             result = num1 - num2
             break
-        case "*":
+        case 2:
             result = num1 * num2
             break
-        case "/":
+        case 3:
             result = num1 / num2
             break
         default:
