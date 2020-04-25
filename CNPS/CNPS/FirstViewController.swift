@@ -120,7 +120,7 @@ class FirstViewController: UIViewController {
     }
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
-        print(self.button_yes.title(for: .normal)!)
+        print(senfer.title(for: .normal)!)
     }
 
 }
