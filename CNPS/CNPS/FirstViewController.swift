@@ -8,8 +8,10 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
+    @IBOutlet weak var talkTable: UITableView!
+    
     @IBOutlet weak var chat_text: UITextField!
     @IBOutlet weak var send_button: UIImageView!
     
@@ -20,10 +22,26 @@ class FirstViewController: UIViewController {
     let button_yes = UIButton(type: UIButton.ButtonType.system)
     let button_no = UIButton(type: UIButton.ButtonType.system)
     
+    var fruits = ["apple", "orange", "melon", "banana", "pineapple"]
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return fruits.count
+    }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // セルを取得する
+        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SampleCell", for: indexPath)
+        
+        // セルに表示する値を設定する
+        cell.textLabel?.text = fruits[indexPath.row]
+        return cell
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
+
         self.chat_text.borderStyle = .roundedRect
         
         let mainScreenHeight = UIScreen.main.bounds.size.height
@@ -120,7 +138,8 @@ class FirstViewController: UIViewController {
     }
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
-        print(senfer.title(for: .normal)!)
+        self.fruits += [senfer.title(for: .normal)!]
+        self.talkTable.reloadData()
     }
 
 }
@@ -129,7 +148,7 @@ extension FirstViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
-    
+
 
 
 }
