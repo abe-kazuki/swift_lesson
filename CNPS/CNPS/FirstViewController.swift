@@ -22,10 +22,15 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     let button_yes = UIButton(type: UIButton.ButtonType.system)
     let button_no = UIButton(type: UIButton.ButtonType.system)
     
-    var fruits = ["apple", "orange", "melon", "banana", "pineapple"]
+    // 現在日時を取得
+    let now = Date()
+    let dateFormatter = DateFormatter()
+
+    
+    var timeLine = [""]
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return fruits.count
+        return self.timeLine.count
     }
         
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -33,7 +38,11 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SampleCell", for: indexPath)
         
         // セルに表示する値を設定する
-        cell.textLabel?.text = fruits[indexPath.row]
+        cell.textLabel?.text = self.timeLine[indexPath.row]
+        
+        cell.textLabel!.textAlignment = NSTextAlignment.center
+        
+        tableView.separatorStyle = .none
         return cell
     }
     
@@ -41,7 +50,16 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        //はじめに表示させる年月日を取得
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy-MM-dd", options: 0, locale: Locale(identifier: "ja_JP"))
+        timeLine = [dateFormatter.string(from: now)]
+        
+        //はじめに表示させる時間取得に設定を更新
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm:ss", options: 0, locale: Locale(identifier: "ja_JP"))
 
+        
+        //テキストフィールドの設定
         self.chat_text.borderStyle = .roundedRect
         
         let mainScreenHeight = UIScreen.main.bounds.size.height
@@ -62,12 +80,14 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         
         let right_chat_text = chat_text.frame.origin.x + chat_text.frame.size.width
         
+        //送信画像の設定
         self.send_button.frame = CGRect(x:right_chat_text,y:mainScreenHeight-tabBarHieght-34,width: 32, height: 34)
         
         send_button.isUserInteractionEnabled = true
         
         send_button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FirstViewController.imageViewTapped(_:))))
         
+        // 「はい」「いいえ」ボタンの設定
         button_yes.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
         button_no.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
 
@@ -131,14 +151,16 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //空文字判定は課題
         chat = (chat_text.text) ?? "入力してね"
         chat_text.text = ""
-        print(chat)
+        self.timeLine += [dateFormatter.string(from: now)+"    "+chat]
+        self.talkTable.reloadData()
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
-        self.fruits += [senfer.title(for: .normal)!]
+        self.timeLine += [dateFormatter.string(from: now)+"    "+senfer.title(for: .normal)!]
+        
         self.talkTable.reloadData()
     }
 
@@ -148,7 +170,5 @@ extension FirstViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
-
-
 
 }
