@@ -8,7 +8,8 @@
 
 import UIKit
 
-class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+
+class FirstViewController: UIViewController{
 
     @IBOutlet weak var talkTable: UITableView!
     
@@ -28,35 +29,23 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
 
     
     var timeLine = [""]
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.timeLine.count
-    }
-        
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        // セルを取得する
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "SampleCell", for: indexPath)
-        
-        // セルに表示する値を設定する
-        cell.textLabel?.text = self.timeLine[indexPath.row]
-        
-        cell.textLabel!.textAlignment = NSTextAlignment.center
-        
-        tableView.separatorStyle = .none
-        return cell
-    }
-    
+    private let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        talkTable.delegate = self
+        talkTable.dataSource = self
+        talkTable.register(UINib(nibName: "ChatTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
+        talkTable.backgroundColor = UIColor(red:118/255,green:140/255,blue:180/255,alpha:1.0)
         
         //はじめに表示させる年月日を取得
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy-MM-dd", options: 0, locale: Locale(identifier: "ja_JP"))
         timeLine = [dateFormatter.string(from: now)]
         
         //はじめに表示させる時間取得に設定を更新
-        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm:ss", options: 0, locale: Locale(identifier: "ja_JP"))
+        dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm", options: 0, locale: Locale(identifier: "ja_JP"))
 
         
         //テキストフィールドの設定
@@ -151,7 +140,7 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
         //空文字判定は課題
         chat = (chat_text.text) ?? "入力してね"
         chat_text.text = ""
-        self.timeLine += [dateFormatter.string(from: now)+"    "+chat]
+        self.timeLine += [chat]
         self.talkTable.reloadData()
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -159,10 +148,35 @@ class FirstViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
-        self.timeLine += [dateFormatter.string(from: now)+"    "+senfer.title(for: .normal)!]
+        self.timeLine += [senfer.title(for: .normal)!]
         
         self.talkTable.reloadData()
     }
+
+}
+extension FirstViewController:  UITableViewDelegate, UITableViewDataSource  {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        tableView.estimatedRowHeight = 20
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.timeLine.count
+    }
+        
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // セルを取得する
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatTableViewCell
+        // セルに表示する値を設定する
+        //cell.messageTextView?.text = self.timeLine[indexPath.row]
+        cell.messageText = self.timeLine[indexPath.row]
+        //cell.timeLabel.text = dateFormatter.string(from: now)
+        
+        tableView.separatorStyle = .none
+        return cell
+    }
+
 
 }
 extension FirstViewController: UITextFieldDelegate {
@@ -170,5 +184,4 @@ extension FirstViewController: UITextFieldDelegate {
         self.view.endEditing(true)
         return false
     }
-
 }

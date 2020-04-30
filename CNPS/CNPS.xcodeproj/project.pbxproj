@@ -16,6 +16,8 @@
 		9264EEE6244C90A300E0BBB4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9264EEE4244C90A300E0BBB4 /* LaunchScreen.storyboard */; };
 		9264EEF1244C90A300E0BBB4 /* CNPSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264EEF0244C90A300E0BBB4 /* CNPSTests.swift */; };
 		9264EEFC244C90A300E0BBB4 /* CNPSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9264EEFB244C90A300E0BBB4 /* CNPSUITests.swift */; };
+		92D35C27245886BA005194A0 /* ChatTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 92D35C26245886BA005194A0 /* ChatTableViewCell.xib */; };
+		92D35C2924588986005194A0 /* ChatTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D35C2824588986005194A0 /* ChatTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,7 +41,7 @@
 		9264EED4244C90A100E0BBB4 /* CNPS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CNPS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9264EED7244C90A100E0BBB4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9264EED9244C90A100E0BBB4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9264EEDB244C90A100E0BBB4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		9264EEDB244C90A100E0BBB4 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; wrapsLines = 1; };
 		9264EEDD244C90A100E0BBB4 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		9264EEE0244C90A100E0BBB4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9264EEE2244C90A300E0BBB4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,6 +53,8 @@
 		9264EEF7244C90A300E0BBB4 /* CNPSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CNPSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9264EEFB244C90A300E0BBB4 /* CNPSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNPSUITests.swift; sourceTree = "<group>"; };
 		9264EEFD244C90A300E0BBB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		92D35C26245886BA005194A0 /* ChatTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ChatTableViewCell.xib; sourceTree = "<group>"; };
+		92D35C2824588986005194A0 /* ChatTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,8 @@
 				9264EEE2244C90A300E0BBB4 /* Assets.xcassets */,
 				9264EEE4244C90A300E0BBB4 /* LaunchScreen.storyboard */,
 				9264EEE7244C90A300E0BBB4 /* Info.plist */,
+				92D35C26245886BA005194A0 /* ChatTableViewCell.xib */,
+				92D35C2824588986005194A0 /* ChatTableViewCell.swift */,
 			);
 			path = CNPS;
 			sourceTree = "<group>";
@@ -236,6 +242,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9264EEE6244C90A300E0BBB4 /* LaunchScreen.storyboard in Resources */,
+				92D35C27245886BA005194A0 /* ChatTableViewCell.xib in Resources */,
 				9264EEE3244C90A300E0BBB4 /* Assets.xcassets in Resources */,
 				9264EEE1244C90A100E0BBB4 /* Main.storyboard in Resources */,
 			);
@@ -264,6 +271,7 @@
 			files = (
 				9264EEDE244C90A100E0BBB4 /* SecondViewController.swift in Sources */,
 				9264EEDC244C90A100E0BBB4 /* FirstViewController.swift in Sources */,
+				92D35C2924588986005194A0 /* ChatTableViewCell.swift in Sources */,
 				9264EED8244C90A100E0BBB4 /* AppDelegate.swift in Sources */,
 				9264EEDA244C90A100E0BBB4 /* SceneDelegate.swift in Sources */,
 			);
