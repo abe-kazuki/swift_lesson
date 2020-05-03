@@ -29,6 +29,7 @@ class FirstViewController: UIViewController{
 
     
     var timeLine = [""]
+    var time = [""]
     private let cellId = "cellId"
     
     override func viewDidLoad() {
@@ -42,11 +43,11 @@ class FirstViewController: UIViewController{
         
         //はじめに表示させる年月日を取得
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy-MM-dd", options: 0, locale: Locale(identifier: "ja_JP"))
-        timeLine = [dateFormatter.string(from: now)]
+        timeLine = ["結月ゆかり：\(dateFormatter.string(from: now))"]
         
         //はじめに表示させる時間取得に設定を更新
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm", options: 0, locale: Locale(identifier: "ja_JP"))
-
+        time = [dateFormatter.string(from: now)]
         
         //テキストフィールドの設定
         self.chat_text.borderStyle = .roundedRect
@@ -75,6 +76,7 @@ class FirstViewController: UIViewController{
         send_button.isUserInteractionEnabled = true
         
         send_button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FirstViewController.imageViewTapped(_:))))
+        
         
         // 「はい」「いいえ」ボタンの設定
         button_yes.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
@@ -129,19 +131,29 @@ class FirstViewController: UIViewController{
                 self.view.frame.origin.y = 0
             }
     }
-                
     override func viewWillDisappear(_ animated: Bool) {
             super.viewWillDisappear(animated)
             NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
             NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    private func yukariLines(){
+        let yukariSerifu = ["何？","こんにちは","今日も良い天気だね","ありがとう"]
+
+        self.timeLine += ["結月ゆかり：\(yukariSerifu.randomElement() ?? "ごめん聞こえなかった")"]
+        self.talkTable.reloadData()
+        self.talkTable.scrollToRow(at: IndexPath(row: self.timeLine.count - 1, section: 0), at: .bottom, animated: true)
+    }
+    
     // 画像がタップされたら呼ばれる
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
         //空文字判定は課題
         chat = (chat_text.text) ?? "入力してね"
         chat_text.text = ""
         self.timeLine += [chat]
-        self.talkTable.reloadData()
+        self.time += [dateFormatter.string(from: now)]
+        
+        yukariLines()
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
@@ -149,8 +161,9 @@ class FirstViewController: UIViewController{
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
         self.timeLine += [senfer.title(for: .normal)!]
+        self.time += [dateFormatter.string(from: now)]
         
-        self.talkTable.reloadData()
+        yukariLines()
     }
 
 }
@@ -169,9 +182,9 @@ extension FirstViewController:  UITableViewDelegate, UITableViewDataSource  {
         // セルを取得する
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatTableViewCell
         // セルに表示する値を設定する
-        //cell.messageTextView?.text = self.timeLine[indexPath.row]
+        
         cell.messageText = self.timeLine[indexPath.row]
-        //cell.timeLabel.text = dateFormatter.string(from: now)
+        //cell.timeLabel.text = self.time[indexPath.row]
         
         tableView.separatorStyle = .none
         return cell

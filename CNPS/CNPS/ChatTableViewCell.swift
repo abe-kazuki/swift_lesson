@@ -12,18 +12,51 @@ class ChatTableViewCell: UITableViewCell {
 
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var messageTextView: UITextView!
+    @IBOutlet weak var myMessageTextView: UITextView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var myTimeLabel: UILabel!
     @IBOutlet weak var yukariLabel: UILabel!
+    @IBOutlet weak var freshmanLabel: UILabel!
     @IBOutlet weak var messageTextViewWidth: NSLayoutConstraint!
+    @IBOutlet weak var myMessageTextViewWidth: NSLayoutConstraint!
     
     var messageText: String?{
         didSet{
             guard let text = messageText else {
                 return
             }
+
             let width = estimateFrameForTextView(text: text).width + 20
-            messageTextViewWidth.constant = width
-            messageTextView.text = text
+            checkYukari(text: text,width: width)
+        }
+    }
+    
+    private func checkYukari(text: String,width: CGFloat){
+        var inputText = text
+        if let range = text.range(of: "結月ゆかり：") {
+            myMessageTextView.isHidden = true
+            messageTextView.isHidden = false
+            userImageView.isHidden = false
+            yukariLabel.isHidden = false
+            freshmanLabel.isHidden = true
+            timeLabel.isHidden = false
+            myTimeLabel.isHidden = true
+            
+            inputText.replaceSubrange(range, with: "")
+            messageTextView.text = inputText
+            messageTextViewWidth.constant = width - 70
+        }
+        else{
+            myMessageTextView.isHidden = false
+            messageTextView.isHidden = true
+            userImageView.isHidden = true
+            yukariLabel.isHidden = true
+            freshmanLabel.isHidden = false
+            timeLabel.isHidden = true
+            myTimeLabel.isHidden = false
+            
+            myMessageTextView.text = inputText
+            myMessageTextViewWidth.constant = width
         }
     }
     
@@ -31,8 +64,11 @@ class ChatTableViewCell: UITableViewCell {
         super.awakeFromNib()
         backgroundColor = UIColor(red:118/255,green:140/255,blue:180/255,alpha:1.0)
         
-        userImageView.layer.cornerRadius = userImageView.frame.size.width * 0.5
+        userImageView.layer.cornerRadius = 30
         messageTextView.layer.cornerRadius = 15
+        
+        myMessageTextView.layer.cornerRadius = 15
+        myMessageTextView.backgroundColor = UIColor(red:154/255,green:224/255,blue:97/255,alpha:1.0)
         
         timeLabel.textColor = UIColor(red:1,green:1,blue:1,alpha:1.0)
         
