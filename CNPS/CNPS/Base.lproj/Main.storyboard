@@ -54,7 +54,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" systemColor="systemGray6Color" red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <toolbarItems/>
@@ -62,6 +62,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="chat_text" destination="Mta-pX-Zzd" id="aI0-Zn-JDD"/>
+                        <outlet property="firstUiTabBar" destination="acW-dT-cKf" id="6AE-RM-fjs"/>
                         <outlet property="send_button" destination="jvi-qN-gMA" id="K4S-1i-ohq"/>
                         <outlet property="tab_first" destination="acW-dT-cKf" id="zRH-Yl-MrV"/>
                         <outlet property="talkTable" destination="cZK-aI-Ul6" id="HXS-en-d9J"/>

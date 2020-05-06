@@ -13,7 +13,13 @@ class FirstViewController: UIViewController{
 
     @IBOutlet weak var talkTable: UITableView!
     
-    @IBOutlet weak var chat_text: UITextField!
+    @IBOutlet weak var firstUiTabBar: UITabBarItem!
+    @IBOutlet weak var chat_text: UITextField!{
+        didSet {
+
+            chat_text.delegate = self // デリゲートをセット
+        }
+    }
     @IBOutlet weak var send_button: UIImageView!
     
     private var chat = "入力してね"
@@ -35,6 +41,11 @@ class FirstViewController: UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+
+        let mainScreenwidth = UIScreen.main.bounds.size.width
+        
+        let tabBarController: UITabBarController = UITabBarController()
+        let tabBarHieght = tabBarController.tabBar.frame.size.height
         
         talkTable.delegate = self
         talkTable.dataSource = self
@@ -52,28 +63,20 @@ class FirstViewController: UIViewController{
         //テキストフィールドの設定
         self.chat_text.borderStyle = .roundedRect
         
-        let mainScreenHeight = UIScreen.main.bounds.size.height
-        
-        let mainScreenwidth = UIScreen.main.bounds.size.width
-        
-        let tabBarController: UITabBarController = UITabBarController()
-        let tabBarHieght = tabBarController.tabBar.frame.size.height
-        print(mainScreenHeight,tabBarHieght)
-        
         let blank_size = mainScreenwidth/12
         
         self.chat_text.borderStyle = UITextField.BorderStyle.roundedRect
         
-        self.chat_text.frame = CGRect(x:blank_size,y:mainScreenHeight-tabBarHieght-34,width: mainScreenwidth-2*blank_size-32, height: 34)
+        self.chat_text.frame = CGRect(x:blank_size,y:self.view.frame.size.height-2*tabBarHieght,width: mainScreenwidth-2*blank_size-32, height: 34)
        
         self.view.addSubview(self.chat_text)
         
         let right_chat_text = chat_text.frame.origin.x + chat_text.frame.size.width
         
         //送信画像の設定
-        self.send_button.frame = CGRect(x:right_chat_text,y:mainScreenHeight-tabBarHieght-34,width: 32, height: 34)
-        
-        send_button.isUserInteractionEnabled = true
+        self.send_button.frame = CGRect(x:right_chat_text,y:self.view.frame.size.height-2 * tabBarHieght,width: 32, height: 34)
+        send_button.isUserInteractionEnabled = false
+
         
         send_button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FirstViewController.imageViewTapped(_:))))
         
@@ -113,32 +116,13 @@ class FirstViewController: UIViewController{
         // viewに追加する
         self.view.addSubview(button_yes)
         self.view.addSubview(button_no)
-    }
-    
-    func keyboardWillShow(notification: NSNotification) {
-            if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-                if self.view.frame.origin.y == 0 {
-                    self.view.frame.origin.y -= keyboardSize.height
-                } else {
-                    let suggestionHeight = self.view.frame.origin.y + keyboardSize.height
-                    self.view.frame.origin.y -= suggestionHeight
-                }
-            }
-    }
-                
-    func keyboardWillHide() {
-            if self.view.frame.origin.y != 0 {
-                self.view.frame.origin.y = 0
-            }
-    }
-    override func viewWillDisappear(_ animated: Bool) {
-            super.viewWillDisappear(animated)
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-            NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+        //tableviewの高さをyesボタンの上までにする
+        talkTable.frame.size = CGSize(width: mainScreenwidth, height: button_yes.frame.midY - 1.2*talkTable.frame.minY)
     }
     
     private func yukariLines(){
-        let yukariSerifu = ["何？","こんにちは","今日も良い天気だね","ありがとう"]
+        let yukariSerifu = ["何？","こんにちは","今日も良い天気だね","ありがとう","別のこと話して！"]
 
         self.timeLine += ["結月ゆかり：\(yukariSerifu.randomElement() ?? "ごめん聞こえなかった")"]
         self.talkTable.reloadData()
@@ -147,8 +131,9 @@ class FirstViewController: UIViewController{
     
     // 画像がタップされたら呼ばれる
     @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        //空文字判定は課題
-        chat = (chat_text.text) ?? "入力してね"
+        guard let chat = chat_text.text else{
+            return
+        }
         chat_text.text = ""
         self.timeLine += [chat]
         self.time += [dateFormatter.string(from: now)]
@@ -192,9 +177,72 @@ extension FirstViewController:  UITableViewDelegate, UITableViewDataSource  {
 
 
 }
-extension FirstViewController: UITextFieldDelegate {
+
+extension FirstViewController: UITextFieldDelegate{
+    override func viewWillAppear(_ animated: Bool) {
+
+        super.viewWillAppear(animated)
+        self.configureObserver()
+
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+
+        super.viewWillDisappear(animated)
+        self.removeObserver() // Notificationを画面が消えるときに削除
+    }
+
+    // Notificationを設定
+    func configureObserver() {
+
+        let notification = NotificationCenter.default
+        notification.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notification.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    // Notificationを削除
+    func removeObserver() {
+
+        let notification = NotificationCenter.default
+        notification.removeObserver(self)
+    }
+
+    // キーボードが現れた時に、画面全体をずらす。
+    @objc func keyboardWillShow(notification: Notification?) {
+
+        let rect = (notification?.userInfo?[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+            let transform = CGAffineTransform(translationX: 0, y: -(rect?.size.height)!)
+            self.view.transform = transform
+
+        })
+    }
+
+    // キーボードが消えたときに、画面を戻す
+    @objc func keyboardWillHide(notification: Notification?) {
+
+        let duration: TimeInterval? = notification?.userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? Double
+        UIView.animate(withDuration: duration!, animations: { () in
+
+            self.view.transform = CGAffineTransform.identity
+        })
+    }
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        return false
+
+        textField.resignFirstResponder() // Returnキーを押したときにキーボードを下げる
+        return true
+    }
+    
+    //空欄時は送信できない様に
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        guard let chatField = self.chat_text.text else{return}
+        if chatField.isEmpty{
+            send_button.isUserInteractionEnabled = false
+        }
+        else{
+            send_button.isUserInteractionEnabled = true
+        }
     }
 }
