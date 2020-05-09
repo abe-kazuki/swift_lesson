@@ -87,15 +87,15 @@
             </tableViewCellContentView>
             <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
+                <outlet property="agentImageView" destination="I8r-lA-6kY" id="cy8-Og-Xrm"/>
+                <outlet property="agentMessageTextView" destination="ZUj-QL-QUS" id="G4B-HD-0zg"/>
+                <outlet property="agentMessageTextViewWidth" destination="xOH-68-FTs" id="U2f-so-J4r"/>
+                <outlet property="agentNameLabel" destination="1M1-YG-kRX" id="MjS-s6-ZLK"/>
+                <outlet property="agentTimeLabel" destination="ofE-G3-oPU" id="kmD-c0-qjl"/>
                 <outlet property="freshmanLabel" destination="com-fc-931" id="JhP-fu-BY3"/>
-                <outlet property="messageTextView" destination="ZUj-QL-QUS" id="G4B-HD-0zg"/>
-                <outlet property="messageTextViewWidth" destination="xOH-68-FTs" id="U2f-so-J4r"/>
                 <outlet property="myMessageTextView" destination="5aq-c0-njU" id="VQE-gE-x0I"/>
                 <outlet property="myMessageTextViewWidth" destination="zMz-pk-QMG" id="rXG-UD-MQD"/>
                 <outlet property="myTimeLabel" destination="Aji-k6-CLS" id="pe2-fK-b5U"/>
-                <outlet property="timeLabel" destination="ofE-G3-oPU" id="kmD-c0-qjl"/>
-                <outlet property="userImageView" destination="I8r-lA-6kY" id="cy8-Og-Xrm"/>
-                <outlet property="yukariLabel" destination="1M1-YG-kRX" id="MjS-s6-ZLK"/>
             </connections>
             <point key="canvasLocation" x="936" y="42"/>
         </tableViewCell>

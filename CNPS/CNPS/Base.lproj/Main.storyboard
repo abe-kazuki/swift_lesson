@@ -61,8 +61,7 @@
                     <navigationItem key="navigationItem" title="Title" id="U6g-Ug-D3j"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="chat_text" destination="Mta-pX-Zzd" id="aI0-Zn-JDD"/>
-                        <outlet property="firstUiTabBar" destination="acW-dT-cKf" id="6AE-RM-fjs"/>
+                        <outlet property="chatTextField" destination="Mta-pX-Zzd" id="aI0-Zn-JDD"/>
                         <outlet property="send_button" destination="jvi-qN-gMA" id="K4S-1i-ohq"/>
                         <outlet property="tab_first" destination="acW-dT-cKf" id="zRH-Yl-MrV"/>
                         <outlet property="talkTable" destination="cZK-aI-Ul6" id="HXS-en-d9J"/>

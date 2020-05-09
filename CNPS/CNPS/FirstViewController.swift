@@ -12,17 +12,13 @@ import UIKit
 class FirstViewController: UIViewController{
 
     @IBOutlet weak var talkTable: UITableView!
-    
-    @IBOutlet weak var firstUiTabBar: UITabBarItem!
-    @IBOutlet weak var chat_text: UITextField!{
+    @IBOutlet weak var chatTextField: UITextField!{
         didSet {
 
-            chat_text.delegate = self // デリゲートをセット
+            chatTextField.delegate = self // デリゲートをセット
         }
     }
     @IBOutlet weak var send_button: UIImageView!
-    
-    private var chat = "入力してね"
     @IBOutlet weak var tab_first: UITabBarItem!
 
     // UIButtonのインスタンスを作成する
@@ -32,61 +28,40 @@ class FirstViewController: UIViewController{
     // 現在日時を取得
     let now = Date()
     let dateFormatter = DateFormatter()
-
-    
-    var timeLine = [""]
-    var time = [""]
+     
+    private var timeLine = [""]
     private let cellId = "cellId"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
-        let mainScreenwidth = UIScreen.main.bounds.size.width
         
+        let mainScreenwidth = UIScreen.main.bounds.size.width
         let tabBarController: UITabBarController = UITabBarController()
         let tabBarHieght = tabBarController.tabBar.frame.size.height
-        
-        talkTable.delegate = self
-        talkTable.dataSource = self
-        talkTable.register(UINib(nibName: "ChatTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
-        talkTable.backgroundColor = UIColor(red:118/255,green:140/255,blue:180/255,alpha:1.0)
         
         //はじめに表示させる年月日を取得
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "yyyy-MM-dd", options: 0, locale: Locale(identifier: "ja_JP"))
         timeLine = ["結月ゆかり：\(dateFormatter.string(from: now))"]
         
-        //はじめに表示させる時間取得に設定を更新
+        //時刻に設定変更
         dateFormatter.dateFormat = DateFormatter.dateFormat(fromTemplate: "HH:mm", options: 0, locale: Locale(identifier: "ja_JP"))
-        time = [dateFormatter.string(from: now)]
         
         //テキストフィールドの設定
-        self.chat_text.borderStyle = .roundedRect
-        
+        self.chatTextField.borderStyle = .roundedRect
+        self.chatTextField.borderStyle = UITextField.BorderStyle.roundedRect
         let blank_size = mainScreenwidth/12
-        
-        self.chat_text.borderStyle = UITextField.BorderStyle.roundedRect
-        
-        self.chat_text.frame = CGRect(x:blank_size,y:self.view.frame.size.height-2*tabBarHieght,width: mainScreenwidth-2*blank_size-32, height: 34)
-       
-        self.view.addSubview(self.chat_text)
-        
-        let right_chat_text = chat_text.frame.origin.x + chat_text.frame.size.width
+        self.chatTextField.frame = CGRect(x:blank_size,y:self.view.frame.size.height-2*tabBarHieght,width: mainScreenwidth-2*blank_size-32, height: 34)
+        self.view.addSubview(self.chatTextField)
         
         //送信画像の設定
+        let right_chat_text = chatTextField.frame.origin.x + chatTextField.frame.size.width
+        //配置はテキストフィールドの右部
         self.send_button.frame = CGRect(x:right_chat_text,y:self.view.frame.size.height-2 * tabBarHieght,width: 32, height: 34)
         send_button.isUserInteractionEnabled = false
-
-        
-        send_button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FirstViewController.imageViewTapped(_:))))
-        
-        
+        send_button.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(FirstViewController.sendImageViewTapped(_:))))
+                
         // 「はい」「いいえ」ボタンの設定
-        button_yes.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
-        button_no.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
-
-
-        // ラベルを設定する
         button_yes.setTitle("はい", for: UIControl.State.normal)
         button_no.setTitle("いいえ", for: UIControl.State.normal)
 
@@ -98,7 +73,6 @@ class FirstViewController: UIViewController{
         
         button_yes.layer.borderColor = UIColor(red:0,green:150/255.0,blue:0,alpha:1.0).cgColor
         button_no.layer.borderColor = UIColor(red:0,green:150/255.0,blue:0,alpha:1.0).cgColor
-        
 
         button_yes.backgroundColor = UIColor(red:0,green:150/255.0,blue:0,alpha:1.0)
         button_no.backgroundColor = UIColor(red:0,green:150/255.0,blue:0,alpha:1.0)
@@ -109,14 +83,21 @@ class FirstViewController: UIViewController{
         button_yes.frame = CGRect(x: 0, y: 0, width: 75, height: 30)
         button_no.frame = CGRect(x: 0, y: 0, width: 75, height: 30)
         
+        //配置はテキストフィールドの上部
+        button_yes.layer.position = CGPoint(x: self.view.frame.width/5, y:self.chatTextField.frame.origin.y-button_yes.frame.height/2-4)
+        button_no.layer.position = CGPoint(x: 2*self.view.frame.width/5, y:self.chatTextField.frame.origin.y-button_yes.frame.height/2-4)
         
-        button_yes.layer.position = CGPoint(x: self.view.frame.width/5, y:self.chat_text.frame.origin.y-button_yes.frame.height/2-4)
-        button_no.layer.position = CGPoint(x: 2*self.view.frame.width/5, y:self.chat_text.frame.origin.y-button_yes.frame.height/2-4)
+        button_yes.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
+        button_no.addTarget(self, action:#selector( pussYesNoButton(_:)), for: UIControl.Event.touchUpInside)
 
-        // viewに追加する
         self.view.addSubview(button_yes)
         self.view.addSubview(button_no)
         
+        //tableviewの設定
+        talkTable.delegate = self
+        talkTable.dataSource = self
+        talkTable.register(UINib(nibName: "ChatTableViewCell", bundle: nil) , forCellReuseIdentifier: cellId)
+        talkTable.backgroundColor = UIColor(red:118/255,green:140/255,blue:180/255,alpha:1.0)
         //tableviewの高さをyesボタンの上までにする
         talkTable.frame.size = CGSize(width: mainScreenwidth, height: button_yes.frame.midY - 1.2*talkTable.frame.minY)
     }
@@ -129,25 +110,17 @@ class FirstViewController: UIViewController{
         self.talkTable.scrollToRow(at: IndexPath(row: self.timeLine.count - 1, section: 0), at: .bottom, animated: true)
     }
     
-    // 画像がタップされたら呼ばれる
-    @objc func imageViewTapped(_ sender: UITapGestureRecognizer) {
-        guard let chat = chat_text.text else{
+    @objc func sendImageViewTapped(_ sender: UITapGestureRecognizer) {
+        guard let chat = chatTextField.text else{
             return
         }
-        chat_text.text = ""
+        chatTextField.text = ""
         self.timeLine += [chat]
-        self.time += [dateFormatter.string(from: now)]
-        
         yukariLines()
-        
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     @objc func pussYesNoButton(_ senfer: UIButton) {
         self.timeLine += [senfer.title(for: .normal)!]
-        self.time += [dateFormatter.string(from: now)]
-        
         yukariLines()
     }
 
@@ -167,7 +140,6 @@ extension FirstViewController:  UITableViewDelegate, UITableViewDataSource  {
         // セルを取得する
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! ChatTableViewCell
         // セルに表示する値を設定する
-        
         cell.messageText = self.timeLine[indexPath.row]
         //cell.timeLabel.text = self.time[indexPath.row]
         
@@ -235,9 +207,9 @@ extension FirstViewController: UITextFieldDelegate{
         return true
     }
     
-    //空欄時は送信できない様に
+    //テキストフィールド空欄時は送信できない様にする
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        guard let chatField = self.chat_text.text else{return}
+        guard let chatField = self.chatTextField.text else{return}
         if chatField.isEmpty{
             send_button.isUserInteractionEnabled = false
         }
