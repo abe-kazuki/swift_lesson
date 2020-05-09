@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="cellId" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="108" id="PEc-MD-xX7" customClass="ChatTableViewCell" customModule="CNPS" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="434" height="108"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="PEc-MD-xX7" id="2R0-aH-IjS">
+                <rect key="frame" x="0.0" y="0.0" width="434" height="108"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="ここにメッセージが入ります" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUj-QL-QUS">
+                        <rect key="frame" x="79" y="25" width="250" height="58"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="250" id="xOH-68-FTs"/>
+                        </constraints>
+                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ofE-G3-oPU">
+                        <rect key="frame" x="339" y="52" width="43" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結月ゆかり" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1M1-YG-kRX">
+                        <rect key="frame" x="79" y="8" width="72" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="結月ゆかり" translatesAutoresizingMaskIntoConstraints="NO" id="I8r-lA-6kY">
+                        <rect key="frame" x="20" y="24" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="60" id="6jh-Fw-DQs"/>
+                            <constraint firstAttribute="width" secondItem="I8r-lA-6kY" secondAttribute="height" multiplier="1:1" id="LBx-GC-Zaq"/>
+                        </constraints>
+                    </imageView>
+                    <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="自分のメッセージ領域" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5aq-c0-njU">
+                        <rect key="frame" x="112" y="26" width="250" height="58"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="250" id="zMz-pk-QMG"/>
+                        </constraints>
+                        <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                    </textView>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aji-k6-CLS">
+                        <rect key="frame" x="59" y="62" width="43" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="新入生" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="com-fc-931">
+                        <rect key="frame" x="290" y="8" width="43" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <color key="textColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="I8r-lA-6kY" firstAttribute="leading" secondItem="2R0-aH-IjS" secondAttribute="leading" constant="20" id="2oH-sV-qEv"/>
+                    <constraint firstItem="5aq-c0-njU" firstAttribute="bottom" secondItem="Aji-k6-CLS" secondAttribute="bottom" constant="1" id="F5e-be-Rf0"/>
+                    <constraint firstAttribute="bottom" secondItem="5aq-c0-njU" secondAttribute="bottom" constant="24" id="H8h-tX-OHE"/>
+                    <constraint firstAttribute="bottom" secondItem="ZUj-QL-QUS" secondAttribute="bottom" constant="25" id="JIy-Qo-qp0"/>
+                    <constraint firstItem="1M1-YG-kRX" firstAttribute="leading" secondItem="2R0-aH-IjS" secondAttribute="leading" constant="79" id="LFX-fl-f0S"/>
+                    <constraint firstItem="ZUj-QL-QUS" firstAttribute="bottom" secondItem="ofE-G3-oPU" secondAttribute="bottom" constant="10" id="OHK-IQ-al3"/>
+                    <constraint firstItem="ZUj-QL-QUS" firstAttribute="top" secondItem="2R0-aH-IjS" secondAttribute="top" constant="25" id="aRs-CT-D8G"/>
+                    <constraint firstItem="ZUj-QL-QUS" firstAttribute="leading" secondItem="I8r-lA-6kY" secondAttribute="leading" constant="59" id="bfD-pS-QKw"/>
+                    <constraint firstAttribute="trailing" secondItem="5aq-c0-njU" secondAttribute="trailing" constant="72" id="gwy-jh-2PU"/>
+                    <constraint firstItem="ofE-G3-oPU" firstAttribute="leading" secondItem="ZUj-QL-QUS" secondAttribute="trailing" constant="10" id="mAk-ja-f7u"/>
+                    <constraint firstItem="I8r-lA-6kY" firstAttribute="centerY" secondItem="2R0-aH-IjS" secondAttribute="centerY" id="mj2-31-U4w"/>
+                    <constraint firstItem="5aq-c0-njU" firstAttribute="top" secondItem="1M1-YG-kRX" secondAttribute="bottom" constant="1" id="uwN-RI-RXd"/>
+                    <constraint firstItem="5aq-c0-njU" firstAttribute="leading" secondItem="Aji-k6-CLS" secondAttribute="trailing" constant="10" id="vE8-1q-PDJ"/>
+                    <constraint firstItem="1M1-YG-kRX" firstAttribute="top" secondItem="2R0-aH-IjS" secondAttribute="top" constant="8" id="wFb-MA-cgm"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="agentImageView" destination="I8r-lA-6kY" id="cy8-Og-Xrm"/>
+                <outlet property="agentMessageTextView" destination="ZUj-QL-QUS" id="G4B-HD-0zg"/>
+                <outlet property="agentMessageTextViewWidth" destination="xOH-68-FTs" id="U2f-so-J4r"/>
+                <outlet property="agentNameLabel" destination="1M1-YG-kRX" id="MjS-s6-ZLK"/>
+                <outlet property="agentTimeLabel" destination="ofE-G3-oPU" id="kmD-c0-qjl"/>
+                <outlet property="freshmanLabel" destination="com-fc-931" id="JhP-fu-BY3"/>
+                <outlet property="myMessageTextView" destination="5aq-c0-njU" id="VQE-gE-x0I"/>
+                <outlet property="myMessageTextViewWidth" destination="zMz-pk-QMG" id="rXG-UD-MQD"/>
+                <outlet property="myTimeLabel" destination="Aji-k6-CLS" id="pe2-fK-b5U"/>
+            </connections>
+            <point key="canvasLocation" x="936" y="42"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="結月ゆかり" width="103" height="122"/>
+    </resources>
+</document>
